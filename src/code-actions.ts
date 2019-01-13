@@ -11,8 +11,6 @@ import { getIdentifier, generateImportStatementFromFile, transformJSIntoExportEx
 import { createComponentInstance, wrapWithComponent, isRangeContainedInJSXExpression, isJSXExpression } from './modules/jsx';
 import * as relative from 'relative';
 import * as path from 'path';
-import getImports from './get-imports';
-import * as prettier from 'prettier';
 
 export async function extractJSXToComponent() {
   let editor = activeEditor();
@@ -27,8 +25,6 @@ export async function extractJSXToComponent() {
     const selectionProccessingResult = await wrapWithComponent(filePath, selectedText());
     await appendSelectedTextToFile(selectionProccessingResult, filePath);
     await prependImportsToFileIfNeeded(selectionProccessingResult, filePath);
-    const destinationImports: string = getImports(selectionProccessingResult.text);
-    prependTextToFile(destinationImports, filePath);
     // tslint:disable-next-line:max-line-length
     const componentInstance = createComponentInstance(selectionProccessingResult.metadata.name, selectionProccessingResult.metadata.componentProperties);
     await replaceSelectionWith(componentInstance);
@@ -130,8 +126,7 @@ export const appendSelectedTextToFile = ({ text: selection }, destinationPath) =
     text = selection;
   }
 
-  const prettyText = prettier.format(text);
-  return appendTextToFile(`${prettyText}`, destinationPath);
+  return appendTextToFile(`${text}`, destinationPath);
 };
 
 export const prependImportsToFileIfNeeded = ({text: selection }, destinationFilePath) => {
