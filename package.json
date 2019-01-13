@@ -2,7 +2,7 @@
     "name": "glean",
     "displayName": "glean",
     "description": "The extension provides refactoring tools for your React codebase",
-    "version": "5.0.2",
+    "version": "2.0.0",
     "publisher": "williamluke4",
     "engines": {
         "vscode": "^1.23.0"
@@ -23,8 +23,7 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-            {
+        "commands": [{
                 "command": "extension.glean",
                 "title": "Extract to File"
             },
@@ -112,8 +111,7 @@
             "semantic-release-vsce",
             "@semantic-release/github"
         ],
-        "prepare": [
-            {
+        "prepare": [{
                 "path": "@semantic-release/changelog",
                 "changelogFile": "CHANGELOG.md"
             },
